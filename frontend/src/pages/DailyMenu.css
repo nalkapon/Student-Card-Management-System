@@ -1,0 +1,60 @@
+.daily-menu-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.daily-menu-container h1 {
+    text-align: left;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.daily-menu-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-bottom: 20px;
+}
+
+.daily-menu-table th,
+.daily-menu-table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+.daily-menu-table th {
+    background-color: #f0f0f0;
+}
+
+.menu-cell {
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.menu-item {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Color classes for menu cells */
+.color-0 {
+    background-color: #d1e7ff; /* Light blue */
+}
+
+.color-1 {
+    background-color: #ffe7d1; /* Light orange */
+}
+
+.color-2 {
+    background-color: #e7d1ff; /* Light purple */
+}
+
+.color-3 {
+    background-color: #d1ffe7; /* Light green */
+}
+
+.color-4 {
+    background-color: #ffd1d1; /* Light red */
+}
