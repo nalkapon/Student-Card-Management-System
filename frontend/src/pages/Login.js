@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import { setCurrentUserId } from '../utils/userUtils';  // Kullanıcı ID'sini saklamak için
-import axios from 'axios';
+import { setCurrentUserId } from '../utils/userUtils';
+import { EmailPasswordStrategy, AuthContext } from '../strategies/AuthStrategies';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,54 +12,42 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  // E-posta değişikliğini kontrol etme
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     checkFormValidity(e.target.value, password);
   };
 
-  // Şifre değişikliğini kontrol etme
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     checkFormValidity(email, e.target.value);
   };
 
-  // Form geçerliliğini kontrol etme
   const checkFormValidity = (email, password) => {
     if (email.trim() && password.trim()) {
-      setIsButtonDisabled(false);  // Eğer her ikisi de doluysa butonu aktif et
+      setIsButtonDisabled(false);
     } else {
-      setIsButtonDisabled(true);   // Eğer birisi eksikse butonu devre dışı bırak
+      setIsButtonDisabled(true);
     }
   };
 
-  // Giriş yapma işlemi
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
-        email: email.trim(),
-        password: password.trim(),
-      });
+      const strategy = new EmailPasswordStrategy();
+      const authContext = new AuthContext(strategy);
+      const userId = await authContext.executeLogin(email.trim(), password.trim());
 
-      const { userId } = response.data;
-      setCurrentUserId(userId); // Kullanıcı ID'sini sakla
-
-      // Giriş başarılıysa anasayfaya yönlendir
+      setCurrentUserId(userId);
       navigate('/home');
     } catch (error) {
       console.error("Login Error:", error);
-
-      if (error.response) {
-        setErrorMessage(error.response.data.message || 'An unexpected error occurred.');
-      } else {
-        setErrorMessage('An unexpected error occurred. Please try again.');
-      }
+      setErrorMessage(
+        error.response?.data?.message || 'An unexpected error occurred.'
+      );
     }
   };
 
-  // Sign Up sayfasına yönlendirme
   const handleSignUpRedirect = () => {
     navigate('/signup');
   };
