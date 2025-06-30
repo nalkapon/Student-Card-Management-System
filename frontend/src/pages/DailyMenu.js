@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './DailyMenu.css'; // Make sure to create or update this CSS file
-import { setCurrentUserId } from '../utils/userUtils';
+import './DailyMenu.css';
 
 const DailyMenu = () => {
     const [menuData, setMenuData] = useState([]);
@@ -19,9 +18,17 @@ const DailyMenu = () => {
         fetchMenu();
     }, []);
 
-    const groupedMenus = days.map(day => {
-        return menuData.filter(menu => new Date(menu.date).toLocaleDateString('en-US', { weekday: 'long' }) === day);
-    });
+    const groupedMenus = days.map(day =>
+        menuData.filter(menu =>
+            new Date(menu.date).toLocaleDateString('en-US', { weekday: 'long' }) === day
+        )
+    );
+
+    const renderMenuDescriptions = (descriptions) => {
+        return descriptions.split(',').map((item, i) => (
+            <div key={i}>{item.trim()}</div>
+        ));
+    };
 
     return (
         <div className="daily-menu-container">
@@ -42,9 +49,7 @@ const DailyMenu = () => {
                                     {menus[rowIndex] ? (
                                         <div className="menu-item">
                                             <div><strong>{new Date(menus[rowIndex].date).toLocaleDateString('en-GB')}</strong></div>
-                                            {menus[rowIndex].menu_description.split(',').map((item, i) => (
-                                                <div key={i}>{item.trim()}</div>
-                                            ))}
+                                            {renderMenuDescriptions(menus[rowIndex].menu_description)}
                                         </div>
                                     ) : (
                                         <div className="menu-item"></div>
