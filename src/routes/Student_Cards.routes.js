@@ -1,18 +1,27 @@
 module.exports = (app) => {
-    const studentCards = require('../controllers/Student_cards.controller');
+  const studentCards = require('../controllers/Student_Cards.controller');
+  const proxyCheck = require('../middlewares/proxyCheck'); // Proxy middleware'ini ekliyoruz
 
-    if (!studentCards) {
-        console.error('Student_cards.controller.js could not be found or is undefined.');
-        return;
-    }
+  if (!studentCards) {
+    console.error('Student_Cards.controller.js could not be found or is undefined.');
+    return;
+  }
 
-    // Define routes
-    app.post('/student_cards', studentCards.create);
-    app.get('/student_cards', studentCards.findAll);
-    app.get('/student_cards/:cardId', studentCards.findOne);
-    app.put('/student_cards/:cardId', studentCards.update);
-    app.delete('/student_cards/:cardId', studentCards.delete);
+  // Kart oluşturma
+  app.post('/student_cards', studentCards.create);
 
-    // Add new route for updating balance
-    app.post('/student_cards/update_balance', studentCards.updateBalance);
+  // Tüm kartları getir
+  app.get('/student_cards', studentCards.findAll);
+
+  // Belirli kartı getir
+  app.get('/student_cards/:cardId', studentCards.findOne);
+
+  // Kart güncelle
+  app.put('/student_cards/:cardId', studentCards.update);
+
+  // Kart sil
+  app.delete('/student_cards/:cardId', studentCards.delete);
+
+  // Bakiye güncelleme - Proxy pattern ile korumalı
+  app.post('/student_cards/update_balance', proxyCheck, studentCards.updateBalance);
 };
