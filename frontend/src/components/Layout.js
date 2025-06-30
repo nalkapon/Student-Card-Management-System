@@ -1,13 +1,13 @@
 import React from 'react';
 import Navbar from './Navbar';
 
-const Layout = ({ children, hideNavbar }) => {
-    return (
-        <div>
-            {!hideNavbar && <Navbar />}
-            <main>{children}</main>
-        </div>
-    );
+const Layout = ({ children, theme, setTheme }) => {
+  return (
+    <>
+      <Navbar theme={theme} setTheme={setTheme} />
+      <main>{children}</main>
+    </>
+  );
 };
 
 export default Layout;

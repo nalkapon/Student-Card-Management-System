@@ -67,7 +67,25 @@ const Home = () => {
         return <div className="error">{error}</div>;
     }
 
-    return (
+   return (
+    <>
+        {userBalance < 140 && (
+            <div style={{
+                position: 'fixed',
+                top: '0',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                backgroundColor: '#f44336',
+                color: 'white',
+                padding: '15px 30px',
+                zIndex: 9999,
+                fontWeight: 'bold',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+            }}>
+                ⚠️ Uyarı: Bakiyeniz 140 TL'nin altındadır. Lütfen bakiye yükleyin.
+            </div>
+        )}
+
         <div className="home-container">
             <header className="header">
                 <h1>Welcome, {userName}!</h1>
@@ -121,7 +139,8 @@ const Home = () => {
                 </div>
             </main>
         </div>
-    );
-};
+    </>
+);
+}
 
 export default Home;
