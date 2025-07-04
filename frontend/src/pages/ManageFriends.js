@@ -12,9 +12,9 @@ const ManageFriends = () => {
     useEffect(() => {
         const fetchFriends = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/friends/${getCurrentUserId()}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/friends/${getCurrentUserId() }`);
                 setFriends(
-                    response.data.map(friend => ({
+                     response.data.map((friend) => ({
                         name: friend.friendName,
                         email: friend.friendEmail,
                         balance: friend.friendBalance !== null ? `${friend.friendBalance} ₺` : '0 ₺',
@@ -28,15 +28,7 @@ const ManageFriends = () => {
         fetchFriends();
     }, []);
 
-    const renderFriendRows = () => {
-        return friends.map((friend, index) => (
-            <tr key={index}>
-                <td>{friend.name}</td>
-                <td>{friend.email}</td>
-                <td>{friend.balance}</td>
-            </tr>
-        ));
-    };
+   
 
     const handleInputChange = (e) => {
         setNewFriendEmail(e.target.value);
@@ -46,18 +38,19 @@ const ManageFriends = () => {
     const handleAddFriend = async (e) => {
         e.preventDefault();
 
-        if (friends.some(friend => friend.email === newFriendEmail)) {
+        if (friends.some((friend) => friend.email === newFriendEmail)) {
             setErrorMessage('This user is already your friend.');
             return;
         }
 
         try {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/with-balance`);
-            const validUser = response.data.find(user => user.email === newFriendEmail);
+             const validUser = response.data.find((user) => user.email === newFriendEmail);
 
             if (validUser) {
+                 const userId = 1; // Replace with the logged-in user's ID
                 await axios.post(`${process.env.REACT_APP_API_URL}/friends`, {
-                    user_id: getCurrentUserId(),
+                    user_id: userId,
                     friend_user_id: validUser.user_id,
                 });
 
@@ -91,7 +84,15 @@ const ManageFriends = () => {
                         <th>Balance</th>
                     </tr>
                 </thead>
-                <tbody>{renderFriendRows()}</tbody>
+                <tbody>
+                    {friends.map((friend, index) => (
+                        <tr key={index}>
+                            <td>{friend.name}</td>
+                            <td>{friend.email}</td>
+                            <td>{friend.balance}</td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
             <button className="add-friend-button" onClick={() => setShowForm(true)}>
                 Add Friend
@@ -102,12 +103,19 @@ const ManageFriends = () => {
                     <form className="add-friend-form" onSubmit={handleAddFriend}>
                         <label>
                             Friend's Email:
-                            <input type="email" value={newFriendEmail} onChange={handleInputChange} required />
+                            <input
+                                type="email"
+                                value={newFriendEmail}
+                                onChange={handleInputChange}
+                                required
+                            />
                         </label>
                         {errorMessage && <p className="error-message">{errorMessage}</p>}
                         <div className="form-buttons">
                             <button type="submit">Add</button>
-                            <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
+                            <button type="button" onClick={() => setShowForm(false)}>
+                                Cancel
+                            </button>
                         </div>
                     </form>
                 </div>

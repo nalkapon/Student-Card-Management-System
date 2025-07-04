@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './DailyMenu.css';
+import { setCurrentUserId } from '../utils/userUtils';
 
 const DailyMenu = () => {
     const [menuData, setMenuData] = useState([]);
@@ -18,17 +19,11 @@ const DailyMenu = () => {
         fetchMenu();
     }, []);
 
-    const groupedMenus = days.map(day =>
-        menuData.filter(menu =>
-            new Date(menu.date).toLocaleDateString('en-US', { weekday: 'long' }) === day
-        )
-    );
+     const groupedMenus = days.map(day => {
+        return menuData.filter(menu => new Date(menu.date).toLocaleDateString('en-US', { weekday: 'long' }) === day);
+    });
 
-    const renderMenuDescriptions = (descriptions) => {
-        return descriptions.split(',').map((item, i) => (
-            <div key={i}>{item.trim()}</div>
-        ));
-    };
+ 
 
     return (
         <div className="daily-menu-container">
@@ -49,7 +44,9 @@ const DailyMenu = () => {
                                     {menus[rowIndex] ? (
                                         <div className="menu-item">
                                             <div><strong>{new Date(menus[rowIndex].date).toLocaleDateString('en-GB')}</strong></div>
-                                            {renderMenuDescriptions(menus[rowIndex].menu_description)}
+                                            {menus[rowIndex].menu_description.split(',').map((item, i) => (
+                                                <div key={i}>{item.trim()}</div>
+                                            ))}
                                         </div>
                                     ) : (
                                         <div className="menu-item"></div>

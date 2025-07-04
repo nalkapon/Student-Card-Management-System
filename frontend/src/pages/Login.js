@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { setCurrentUserId } from '../utils/userUtils';
-import { EmailPasswordStrategy, AuthContext } from '../strategies/AuthStrategies';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -33,18 +33,23 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    try {
-      const strategy = new EmailPasswordStrategy();
-      const authContext = new AuthContext(strategy);
-      const userId = await authContext.executeLogin(email.trim(), password.trim());
+   try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
+        email: email.trim(),
+        password: password.trim(),
+      });
 
+      const { userId } = response.data;
       setCurrentUserId(userId);
       navigate('/home');
     } catch (error) {
       console.error("Login Error:", error);
-      setErrorMessage(
-        error.response?.data?.message || 'An unexpected error occurred.'
-      );
+       if (error.response) {
+        setErrorMessage(error.response.data.message || 'An unexpected error occurred.');
+      } else {
+        setErrorMessage('An unexpected error occurred. Please try again.');
+      }
+      
     }
   };
 
