@@ -35,11 +35,11 @@ require('./routes/Enrollments.routes')(app);
 require('./routes/Friends.routes')(app);
 require('./routes/Student_Cards.routes')(app);
 require('./routes/Users.routes')(app);
-
-
+require('./routes/Syllabus.routes')(app);
 // Sunucuyu başlatma
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+
 const studentCardRoutes = require('./routes/Student_Cards.routes');
 studentCardRoutes(app);
