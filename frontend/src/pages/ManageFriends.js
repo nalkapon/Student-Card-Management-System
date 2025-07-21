@@ -7,7 +7,7 @@ const ManageFriends = () => {
     const [friends, setFriends] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [newFriendEmail, setNewFriendEmail] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');}
+    const [errorMessage, setErrorMessage] = useState('');
 
     // Fetch friends from the backend on component load
     useEffect(() => {
@@ -109,7 +109,6 @@ const ManageFriends = () => {
                         </tr>
                     ))}
                 </tbody>
-                <tbody>{renderFriendRows()}</tbody>
             </table>
             <button className="add-friend-button" onClick={() => setShowForm(true)}>
                 Add Friend
@@ -126,7 +125,6 @@ const ManageFriends = () => {
                                 onChange={handleInputChange}
                                 required
                             />
-                            <input type="email" value={newFriendEmail} onChange={handleInputChange} required />
                         </label>
                         {errorMessage && <p className="error-message">{errorMessage}</p>}
                         <div className="form-buttons">
@@ -134,7 +132,6 @@ const ManageFriends = () => {
                             <button type="button" onClick={() => setShowForm(false)}>
                                 Cancel
                             </button>
-                            <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -143,4 +140,5 @@ const ManageFriends = () => {
     );
 };
 
+}
 export default ManageFriends;
