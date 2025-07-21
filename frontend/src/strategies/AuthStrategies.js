@@ -16,6 +16,16 @@ export class EmailPasswordStrategy extends AuthStrategy {
     }
 }
 
+export class PhonePasswordStrategy extends AuthStrategy {
+    async login(phone, password) {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/login-phone`, {
+            phone,
+            password,
+        });
+        return response.data.userId;
+    }
+}
+
 export class AuthContext {
     constructor(strategy) {
         this.strategy = strategy;
