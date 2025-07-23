@@ -2,8 +2,8 @@ const SyllabusSingleton = require('../SyllabusSingleton');
 
 describe('Singleton Pattern - SyllabusSingleton', () => {
   test('Should return the same instance every time', () => {
-    const instance1 = require('../src/SyllabusSingleton');
-    const instance2 = require('../src/SyllabusSingleton');
+    const instance1 = require('../SyllabusSingleton');
+    const instance2 = require('../SyllabusSingleton');
     expect(instance1).toBe(instance2); // aynı referans mı
   });
 
@@ -14,7 +14,7 @@ describe('Singleton Pattern - SyllabusSingleton', () => {
   });
 
   test('Should maintain shared state across imports', () => {
-    const otherInstance = require('../src/SyllabusSingleton');
+    const otherInstance = require('../SyllabusSingleton');
     expect(otherInstance.getSyllabus()).toEqual(['Math', 'Physics']);
   });
 });
