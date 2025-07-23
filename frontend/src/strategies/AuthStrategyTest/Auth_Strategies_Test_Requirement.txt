@@ -1,0 +1,4 @@
+Terminalde bu komutlar uygulanarak kutuphaneler yuklenmeli
+
+npm install --save-dev jest @babel/preset-env @babel/preset-react
+npm install --save-dev axios jest-mock-axios
