@@ -35,7 +35,7 @@ export class AuthContext {
         this.strategy = strategy;
     }
 
-    async executeLogin(email, password) {
-        return await this.strategy.login(email, password);
+    async executeLogin(identifier, password) {
+        return await this.strategy.login(identifier, password);
     }
 }

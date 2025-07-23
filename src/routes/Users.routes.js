@@ -2,6 +2,7 @@ module.exports = app => {
     const users = require('../controllers/users.controller');
 
     app.post('/users/login', users.login); // Login endpoint
+    app.post('/users/login-phone', users.loginPhone); // Login with phone endpoint
     app.post('/users', users.create);      // Create user
     app.get('/users', users.findAll);      // Fetch all users
     app.get('/users/with-balance', users.findAllWithBalance); // Users with balance

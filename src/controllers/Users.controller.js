@@ -1,23 +1,67 @@
-const User = require('../models/users.model');
-
-// Create a new user
-exports.create = async (req, res) => {
-    if (!req.body.email || !req.body.password || !req.body.name) {
-        return res.status(400).send({ message: "Email, password, and name are required!" });
+// Login with phone only
+exports.loginPhone = async (req, res) => {
+    const { email, phone, password } = req.body;
+    let identifier = email || phone;
+    if (!identifier || !password) {
+        return res.status(400).send({ message: 'Email or phone and password are required!' });
     }
 
+    User.findByEmail(identifier, (err, user) => {
+        if (err || !user) {
+            return res.status(404).send({ message: 'Invalid credentials.' });
+        }
+        if (password !== user.password_hash) {
+            return res.status(401).send({ message: 'Invalid credentials.' });
+        }
+        return res.status(200).send({ userId: user.user_id });
+    });
+};
+/*
+exports.loginPhone = async (req, res) => {
+    const { phone, password } = req.body;
+    if (!phone || !password) {
+        return res.status(400).send({ message: 'Phone and password are required!' });
+    }
+
+    // Search plain phone
+    let phoneString = '';
+
+    User.findByEmail(phoneString, (err, user) => {
+        if (err || !user) {
+        return res.status(404).send({ message: 'Invalid credentiaals.' + phoneString });
+        }
+        if (password !== user.password_hash) {
+            return res.status(401).send({ message: 'Wrong password or phone number or email.' });
+        }
+        return res.status(200).send({ userId: user.user_id });
+    });
+};*/
+const User = require('../models/users.model');
+
+
+
+// Create a new user
+// Removed detectIdentifierType import
+
+exports.create = async (req, res) => {
+    const { email, phone, password, name, contact_details } = req.body;
+    let identifier = email || phone;
+    if (!identifier || !password || !name) {
+        return res.status(400).send({ message: "Email or phone, password, and name are required!" });
+    }
+
+    // Save plain email or phone
+    let emailString = email ? email : phone;
+
+    let userObj = {
+        email: emailString,
+        password_hash: password,
+        name,
+        contact_details: contact_details || null,
+    };
+
     try {
-        console.log("Password:", req.body.password);
-
-        // Directly use the plain text password (NOT recommended for production)
-        const user = new User({
-            email: req.body.email,
-            password_hash: req.body.password, // Directly storing the plain password
-            name: req.body.name,
-            contact_details: req.body.contact_details || null,
-        });
-
-        User.create(user, (err, data) => {
+        User.create(userObj, (err, data) => {
             if (err) {
                 console.error("Error during User.create:", err);
                 res.status(500).send({
@@ -35,23 +79,19 @@ exports.create = async (req, res) => {
 
 // Login functionality
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
-    console.log(email, password);//iş bitince kaldır
-    console.log(`abi`);//iş bitince kaldır
-    if (!email || !password) {
-        return res.status(400).send({ message: 'Email and password are required!' });
+    const { email, phone, password } = req.body;
+    let identifier = email || phone;
+    if (!identifier || !password) {
+        return res.status(400).send({ message: 'Email or phone and password are required!' });
     }
 
-    User.findByEmail(email, (err, user) => {
+    User.findByEmail(identifier, (err, user) => {
         if (err || !user) {
-            return res.status(404).send({ message: 'Invalid email or password.' });
+            return res.status(404).send({ message: 'Invalid credentials.' });
         }
-
-        // Directly compare the password (NOT recommended for production)
         if (password !== user.password_hash) {
-            return res.status(401).send({ message: 'Invalid email or password.' });
+            return res.status(401).send({ message: 'Invalid credentials.' });
         }
-
         return res.status(200).send({ userId: user.user_id });
     });
 };

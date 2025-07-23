@@ -1,7 +1,21 @@
+// Yardımcı: Email mi telefon mu?
+function detectIdentifierType(str) {
+    const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    const phoneRegex = /^\d{10,13}$/;
+    if (emailRegex.test(str)) {
+        return 'email';
+    } else if (!str.includes('@') && phoneRegex.test(str)) {
+        return 'phone';
+    } else {
+        return 'invalid';
+    }
+}
+
+module.exports.detectIdentifierType = detectIdentifierType;
 const sql = require('../config/db_config');
 
 const User = function (user) {
-    this.email = user.email;
+    this.email = user.email; // email alanı hem email hem phone stringi tutacak
     this.password_hash = user.password_hash;
     this.name = user.name;
     this.contact_details = user.contact_details;
@@ -9,9 +23,7 @@ const User = function (user) {
 
 // Create a new user
 User.create = (newUser, result) => {
-    // Log the newUser object before insertion
     console.log('New User to Insert:', newUser);
-
     sql.query("INSERT INTO Users SET ?", newUser, (err, res) => {
         if (err) {
             console.error('SQL Error:', err);
@@ -53,10 +65,10 @@ User.findByEmail = (email, result) => {
             return;
         }
         if (res.length) {
-            result(null, res[0]); // Return the found user
+            result(null, res[0]);
             return;
         }
-        result(null, null); // No user found
+        result(null, null);
     });
 };
 
