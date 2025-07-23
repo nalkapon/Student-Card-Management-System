@@ -1,4 +1,4 @@
-const SyllabusSingleton = require('../src/SyllabusSingleton');
+const SyllabusSingleton = require('../SyllabusSingleton');
 
 describe('Singleton Pattern - SyllabusSingleton', () => {
   test('Should return the same instance every time', () => {
