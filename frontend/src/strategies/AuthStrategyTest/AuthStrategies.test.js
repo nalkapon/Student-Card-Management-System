@@ -3,7 +3,7 @@ import {
   AuthContext, 
   EmailPasswordStrategy, 
   PhonePasswordStrategy 
-} from './AuthStrategies';
+} from '../AuthStrategies';
 
 process.env.REACT_APP_API_URL = 'http://localhost:3000';
 
