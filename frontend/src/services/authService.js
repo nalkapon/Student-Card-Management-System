@@ -10,18 +10,22 @@ export const login = async (email, password) => {
         // Save token and user data to localStorage
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('current_user_id', user.user_id);   // <-- EKLE!
 
         return user;
     } catch (error) {
-        throw error.response.data.message || 'Login failed!';
+        throw error.response?.data?.message || 'Login failed!';
     }
 };
 
 export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('current_user_id');
 };
 
-export const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem('user'));
+
+export const getCurrentUserId = () => {
+    return localStorage.getItem('current_user_id') || null;
 };
+
