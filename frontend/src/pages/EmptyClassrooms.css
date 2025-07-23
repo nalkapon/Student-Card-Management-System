@@ -4,6 +4,16 @@
     text-align: center;
 }
 
+body.dark-mode .empty-classrooms-container {
+    background-color: #1e1e1e !important;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode h1 {
+    color: #ffffff;
+}
+
 .header {
     display: flex;
     justify-content: space-between;

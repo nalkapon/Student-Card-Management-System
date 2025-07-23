@@ -85,6 +85,7 @@ const StudentCards = () => {
                             fontSize: '30px',
                             fontWeight: 'bold',
                             color: '#333',
+                            color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#333',
                         }}
                     >
                         {balance.toFixed(2)}₺

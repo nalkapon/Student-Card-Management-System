@@ -7,6 +7,16 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+body.dark-mode .manage-friends-container {
+    background-color: #1e1e1e !important;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode h1 {
+    color: #ffffff;
+}
+
 .friends-table {
     width: 100%;
     border-collapse: collapse;

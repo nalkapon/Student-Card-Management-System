@@ -7,6 +7,20 @@ body {
     line-height: 1.6;
 }
 
+body.dark-mode .home-container {
+    background-color: #1e1e1e !important;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode h1 {
+    color: #ffffff;
+}
+
+body.dark-mode .quick-actions h3 {
+    color: #ffffff;
+}
+
 .home-container {
     padding: 40px 20px;
     max-width: 1200px;

@@ -10,6 +10,16 @@
     font-family: Arial, sans-serif;
 }
 
+body.dark-mode .user-container {
+    background-color: #1e1e1e !important;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode h1 {
+    color: #ffffff;
+}
+
 h1 {
     text-align: center;
     color: #333;

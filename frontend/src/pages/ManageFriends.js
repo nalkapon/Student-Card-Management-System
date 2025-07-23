@@ -13,10 +13,8 @@ const ManageFriends = () => {
     useEffect(() => {
         const fetchFriends = async () => {
             try {
-                 // Replace with the logged-in user's ID
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/friends/${getCurrentUserId()}`);
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/friends/${getCurrentUserId()}`);
                 setFriends(
-
                     response.data.map(friend => ({
                         name: friend.friendName,
                         email: friend.friendEmail,
@@ -52,7 +50,6 @@ const ManageFriends = () => {
         e.preventDefault();
 
         // Check if the friend already exists
-        if (friends.some((friend) => friend.email === newFriendEmail)) {
         if (friends.some(friend => friend.email === newFriendEmail)) {
             setErrorMessage('This user is already your friend.');
             return;
@@ -63,7 +60,7 @@ const ManageFriends = () => {
             const validUser = response.data.find((user) => user.email === newFriendEmail);
 
             if (validUser) {
-                const userId = 1; // Replace with the logged-in user's ID
+                const userId = 1;
                 await axios.post(`${process.env.REACT_APP_API_URL}/friends`, {
                     user_id: userId,
                     user_id: getCurrentUserId(),
@@ -140,5 +137,4 @@ const ManageFriends = () => {
     );
 };
 
-}
 export default ManageFriends;
