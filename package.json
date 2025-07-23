@@ -4,14 +4,13 @@
   "description": "yakin.etu.edu.tr web sitesi",
   "main": "./src/index.js",
   "scripts": {
-   "start": "node ./src/index.js",
-   "start:dev": "nodemon ./src/index.js",
-   "test": "jest"
+    "start": "node ./src/index.js",
+    "start:dev": "nodemon ./src/index.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-   
-    "url": "git+https://github.com/CNrg32/yakin.etu.edu.tr_project.git" 
+    "url": "git+https://github.com/CNrg32/yakin.etu.edu.tr_project.git"
   },
   "author": "",
   "license": "ISC",
@@ -28,8 +27,13 @@
     "yakin.etu.edu.tr_project": "file:"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "babel-jest": "^30.0.5",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "nodemon": "^3.1.7",
+    "supertest": "^7.1.4"
   }
-
-  
 }
